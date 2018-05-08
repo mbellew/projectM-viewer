@@ -382,7 +382,7 @@ void projectMSDL::customEventHandler(SDL_Event *evt)
 
         case UPDATE_SKELETON:
         {
-            auto *skel = (Skeleton *)evt->user.data2;
+            Skeleton *skel = (Skeleton *)evt->user.data2;
             dm->update(*skel);
             delete skel;
         }
