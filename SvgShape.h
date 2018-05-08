@@ -11,6 +11,7 @@ struct svg_op
     char type;
     float data[6];
 };
+
 #define M(x,y) {'M',(float)x,(float)y}
 #define l(x,y) {'l',(float)x,(float)y}
 #define L(x,y) {'L',(float)x,(float)y}

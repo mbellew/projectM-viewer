@@ -142,7 +142,7 @@ BurningManShape::BurningManShape()
             }
         }
     }
-    radius = 1.0;
+    radius = 0.2;
     border_r=border_g=border_b=0;
     r=g=b=0;
 }

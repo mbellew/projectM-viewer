@@ -14,6 +14,9 @@
 #include <iostream>
 #include <sys/stat.h>
 #include <SDL2/SDL.h>
+#include <Renderable.hpp>
+#include "SvgShape.h"
+
 
 // DATADIR_PATH should be set by the root Makefile if this is being
 // built with autotools.
@@ -29,7 +32,42 @@
 
 const float FPS = 60;
 
-class projectMSDL : projectM {
+
+enum customEvents
+{
+    // SETTINGS
+    SETTING_MESH, /* x, y */
+    SETTING_FPS,
+    SETTING_TEXTURE_SIZE,
+    SETTING_WINDOW_SIZE,  /* width, height */
+    SETTING_PRESET_URL,
+    SETTING_TITLE_FONT_URL,
+    SETTING_MENU_FONT_URL,
+    SETTING_SMOOTH_PRESET_DURATION,
+    SETTING_PRESET_DURATION,
+    SETTING_BEAT_SENSITIVITY,
+    SETTING_ASPECT_CORRECTION,
+    SETTING_EASTER_EGG,
+    SETTING_SHUFFLE_ENABLED,
+    SETTING_SOFT_CUT_RATINGS_ENABLED,
+    // COMMANDS
+    SELECT_PRESET_INDEX,
+    SELECT_PRESET_URL,
+    SELECT_NEXT,
+    SELECT_PREVIOUS,
+    SELECT_RANDOM,
+    SET_FULL_SCREEN, /* 1=FULL, 0=DESKTOP, -1=TOGGLE */
+    // POINTS
+    CLEAR_POINTS,
+    ADD_POINT,       /* x*1000, y*1000 */
+    ADD_LINE,         /* (index, index) */
+
+    // SKELETON TRACKING
+    UPDATE_SKELETON   /* id, Skeleton * */
+};
+
+
+class projectMSDL : public projectM {
 public:
     bool done;
 
@@ -45,7 +83,11 @@ public:
     void pollEvent();
     void maximize();
 
+    void pushEvent(enum customEvents code, int data1=0, void *data2=NULL);
+
 private:
+    int CUSTOM_EVENT_TYPE=0;
+
     SDL_Window *win;
     SDL_Renderer *rend;
     bool isFullScreen;
@@ -67,7 +109,10 @@ private:
 
     void addFakePCM();
     void keyHandler(SDL_Event *);
+    void customEventHandler(SDL_Event *);
     SDL_AudioDeviceID selectAudioInput(int count);
+
+    Pipeline &modifyPipeline(Pipeline &presetPipeline, PipelineContext &pipelineContext);
 };
 
 
