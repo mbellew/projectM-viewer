@@ -11,6 +11,9 @@
 #include <cstdio>
 #include "DancingManShape.h"
 
+#define nullptr NULL
+
+
 void *handleConsole(void *);
 inline Uint64 min(Uint64 a,Uint64 b) {return a<b?a:b;}
 
@@ -51,7 +54,7 @@ char *persee_device = nullptr;
 
 void *handleConsole(void *pv)
 {
-    auto *app = (projectMSDL *)pv;
+    projectMSDL *app = (projectMSDL *)pv;
 
     _IO_FILE *in = stdin;
     if (nullptr != command_input_device)
@@ -105,7 +108,7 @@ void *handleConsole(void *pv)
 
 void *handleSpotify(void *pv)
 {
-    auto *app = (projectMSDL *)pv;
+    projectMSDL *app = (projectMSDL *)pv;
 
     _IO_FILE *in = stdin;
     if (nullptr == spotify_dbus_device)
@@ -199,7 +202,7 @@ bool parsePair(char **inout, float *xy)
 // TODO handle multiple skeletons (enter,leave)
 void *handlePersee(void *pv)
 {
-    auto *app = (projectMSDL *) pv;
+    projectMSDL *app = (projectMSDL *) pv;
 
     _IO_FILE *in = stdin;
     if (nullptr == persee_device)
